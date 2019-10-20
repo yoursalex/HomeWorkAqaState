@@ -2,29 +2,19 @@ package ru.netology.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CashbackHackServiceTest {
 
-    @Test
-    void checkRemainIfAmountIs900() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/amountOptions.csv", numLinesToSkip = 1)
+    void checkRemain(int amount, int expected, String message) {
         CashbackHackService cashBackService = new CashbackHackService();
-        int amount = 900;
         int actual = cashBackService.remain(amount);
-        int expected = 100;
-
-        assertEquals(expected,actual);
-    }
-
-    @Test
-    void checkRemainIfAmountIs1000() {
-        CashbackHackService cashBackService = new CashbackHackService();
-        int amount = 1000;
-        int actual = cashBackService.remain(amount);
-        int expected = 0;
-
-        assertEquals(expected,actual);
+        assertEquals(expected,actual, message);
     }
 
     @Test
@@ -48,8 +38,5 @@ class CashbackHackServiceTest {
 
         assertEquals("amount must be greater than zero", exception.getMessage());
     }
-
-
-
 
 }
