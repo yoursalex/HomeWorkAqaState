@@ -1,5 +1,6 @@
 package ru.netology.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,6 +26,30 @@ class CashbackHackServiceTest {
 
         assertEquals(expected,actual);
     }
+
+    @Test
+    void checkThatThrowsExceptionIfAmountBelowZero() {
+        CashbackHackService cashBackService = new CashbackHackService();
+        int amount = -1;
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+           cashBackService.remain(amount);
+        });
+
+        assertEquals("amount must be greater than zero", exception.getMessage());
+    }
+
+    @Test
+    void checkThatThrowsExceptionIfAmountIsZero() {
+        CashbackHackService cashBackService = new CashbackHackService();
+        int amount = 0;
+        Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
+            cashBackService.remain(amount);
+        });
+
+        assertEquals("amount must be greater than zero", exception.getMessage());
+    }
+
+
 
 
 }
